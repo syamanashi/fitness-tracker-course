@@ -10,13 +10,23 @@ import * as moment from 'moment';
 })
 export class SignupComponent implements OnInit {
   currentTime: any;
+  maxDate: Date;
 
   constructor() {}
 
   ngOnInit() {
-    // this.currentTime = moment().format('MMMM Do YYYY, h:mm:ss a');
-    // this.currentTime = moment();
     this.currentTime = moment().format('LLLL');
+
+    /* Using JavaScript dates */
+    // this.maxDate = new Date();
+    // this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
+    // console.log('this.maxDate', this.maxDate);
+
+    /* Using moment.js */
+    this.maxDate = moment()
+      .subtract(18, 'years')
+      .toDate(); // Returns a JavaScript date.
+    console.log('this.maxDate', this.maxDate);
   }
 
   onSubmit(form: NgForm) {
