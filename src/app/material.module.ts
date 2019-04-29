@@ -8,6 +8,7 @@ import {
   MatCheckboxModule,
   MatSidenavModule,
   MatToolbarModule,
+  MatListModule,
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
@@ -22,6 +23,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatCheckboxModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatListModule,
   ],
   exports: [
     MatButtonModule,
@@ -33,6 +35,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatCheckboxModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatListModule,
   ],
 })
 export class MaterialModule {}
