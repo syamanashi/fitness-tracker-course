@@ -10,6 +10,7 @@ import {
   MatToolbarModule,
   MatListModule,
   MatTabsModule,
+  MatCardModule,
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
@@ -26,6 +27,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatToolbarModule,
     MatListModule,
     MatTabsModule,
+    MatCardModule,
   ],
   exports: [
     MatButtonModule,
@@ -39,6 +41,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatToolbarModule,
     MatListModule,
     MatTabsModule,
+    MatCardModule,
   ],
 })
 export class MaterialModule {}
