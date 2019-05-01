@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import * as moment from 'moment';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -12,7 +13,7 @@ export class SignupComponent implements OnInit {
   currentTime: any;
   maxDate: Date;
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.currentTime = moment().format('LLLL');
@@ -30,6 +31,10 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    console.log(form);
+    console.log('form', form);
+    this.authService.registerUser({
+      email: form.value.email,
+      password: form.value.password,
+    });
   }
 }
