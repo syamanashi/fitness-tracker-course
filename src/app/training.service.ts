@@ -16,6 +16,7 @@ export class TrainingService {
     { id: 'burpees', name: 'Burpees', duration: 60, calories: 8 },
     { id: 'standing-bow', name: 'Standing Bow', duration: 200, calories: 20 },
   ];
+  private exercisesDone: Exercise[] = [];
 
   get availableExercises() {
     return this.exercises.slice(); // returns a new array created from an instance of this.exercises.
@@ -30,5 +31,23 @@ export class TrainingService {
   startExercise(selectedId: string) {
     this.exercise = this.availableExercises.find(ex => ex.id === selectedId);
     this.exerciseChanged.next({ ...this.exercise });
+  }
+
+  completeExercise() {
+    this.exercisesDone.push({ ...this.exercise, date: new Date(), state: 'completed' });
+    this.exercise = null;
+    this.exerciseChanged.next(null);
+  }
+
+  cancelExercise(progress: number) {
+    this.exercisesDone.push({
+      ...this.exercise,
+      duration: (this.exercise.duration * progress) / 100,
+      calories: (this.exercise.calories * progress) / 100,
+      date: new Date(),
+      state: 'canceled',
+    });
+    this.exercise = null;
+    this.exerciseChanged.next(null);
   }
 }
