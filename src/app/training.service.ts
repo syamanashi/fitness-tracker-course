@@ -18,4 +18,10 @@ export class TrainingService {
   }
 
   constructor() {}
+
+  private runningExercise: Exercise;
+
+  startExercise(selectedId: string) {
+    this.runningExercise = this.availableExercises.find(ex => ex.id === selectedId);
+  }
 }
