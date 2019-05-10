@@ -26,6 +26,10 @@ export class TrainingService {
     return { ...this.exercise };
   }
 
+  get doneExercises() {
+    return this.exercisesDone.slice();
+  }
+
   constructor() {}
 
   startExercise(selectedId: string) {
