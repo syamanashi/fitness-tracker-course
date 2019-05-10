@@ -5,17 +5,8 @@
       <mat-form-field>
         <mat-label>Type of training</mat-label>
         <mat-select>
-          <mat-option value="crunches">
-            Crunches
-          </mat-option>
-          <mat-option value="touch-toes">
-            Touch Toes
-          </mat-option>
-          <mat-option value="side-lunges">
-            Side Lunges
-          </mat-option>
-          <mat-option value="burpees">
-            Burpees
+          <mat-option *ngFor="let exercise of trainingService.availableExercises" [value]="exercise">
+            {{ exercise.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
