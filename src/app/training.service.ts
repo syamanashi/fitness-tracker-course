@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 export class TrainingService {
   exerciseChanged = new Subject<Exercise>();
 
-  private runningExercise: Exercise;
+  private exercise: Exercise;
   private exercises: Exercise[] = [
     { id: 'crunches', name: 'Crunches', duration: 30, calories: 8 },
     { id: 'touch-toes', name: 'Touch Toes', duration: 180, calories: 15 },
@@ -21,10 +21,14 @@ export class TrainingService {
     return this.exercises.slice(); // returns a new array created from an instance of this.exercises.
   }
 
+  get runningExercise() {
+    return { ...this.exercise };
+  }
+
   constructor() {}
 
   startExercise(selectedId: string) {
-    this.runningExercise = this.availableExercises.find(ex => ex.id === selectedId);
-    this.exerciseChanged.next({ ...this.runningExercise });
+    this.exercise = this.availableExercises.find(ex => ex.id === selectedId);
+    this.exerciseChanged.next({ ...this.exercise });
   }
 }
