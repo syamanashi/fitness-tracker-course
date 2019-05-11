@@ -15,6 +15,7 @@ import {
   MatProgressSpinnerModule,
   MatDialogModule,
   MatTableModule,
+  MatSortModule,
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
@@ -36,6 +37,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatTableModule,
+    MatSortModule,
   ],
   exports: [
     MatButtonModule,
@@ -54,6 +56,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatTableModule,
+    MatSortModule,
   ],
 })
 export class MaterialModule {}
