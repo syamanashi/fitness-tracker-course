@@ -1,26 +1,20 @@
 import { Injectable } from '@angular/core';
+import { DocumentChangeAction, AngularFirestore } from '@angular/fire/firestore';
+import { Subject, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+
 import { Exercise } from './training/exercise.model';
-import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TrainingService {
   exerciseChanged = new Subject<Exercise>();
+  exercisesChanged = new Subject<Exercise[]>();
 
   private exercise: Exercise;
-  private exercises: Exercise[] = [
-    { id: 'crunches', name: 'Crunches', duration: 30, calories: 8 },
-    { id: 'touch-toes', name: 'Touch Toes', duration: 180, calories: 15 },
-    { id: 'side-lunges', name: 'Side Lunges', duration: 120, calories: 18 },
-    { id: 'burpees', name: 'Burpees', duration: 60, calories: 8 },
-    { id: 'standing-bow', name: 'Standing Bow', duration: 200, calories: 20 },
-  ];
+  private exercises: Exercise[] = [];
   private exercisesDone: Exercise[] = [];
-
-  get availableExercises() {
-    return this.exercises.slice(); // returns a new array created from an instance of this.exercises.
-  }
 
   get runningExercise() {
     return { ...this.exercise };
@@ -30,11 +24,45 @@ export class TrainingService {
     return this.exercisesDone.slice();
   }
 
-  constructor() {}
+  constructor(private db: AngularFirestore) {}
+
+  fetchAvailableExercises() {
+    return this.db
+      .collection('availableExercises')
+      .snapshotChanges()
+      .pipe(
+        // tap(docArray => console.log('docArray', docArray)),
+        map((docArray: DocumentChangeAction<{}>[]) => {
+          return docArray.map(doc => {
+            return {
+              id: doc.payload.doc.id,
+              ...doc.payload.doc.data(),
+            } as Exercise;
+          });
+        })
+      )
+      .subscribe((exercises: Exercise[]) => {
+        this.exercises = exercises;
+        this.exercisesChanged.next([...exercises]);
+      });
+  }
 
   startExercise(selectedId: string) {
-    this.exercise = this.availableExercises.find(ex => ex.id === selectedId);
+    this.exercise = this.exercises.find(ex => ex.id === selectedId);
     this.exerciseChanged.next({ ...this.exercise });
+    // this.db
+    //   .doc(`availableExercises/${selectedId}`)
+    //   .snapshotChanges()
+    //   .pipe(
+    //     tap(doc => console.log('doc', doc)),
+    //     map(doc => {
+    //       console.log('doc', doc);
+    //       this.exercise = {
+    //         id: doc.payload.id,
+    //         ...doc.payload.data(),
+    //       } as Exercise;
+    //     })
+    //   );
   }
 
   completeExercise() {
